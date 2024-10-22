@@ -1,0 +1,33 @@
+h1{
+  margin: 0;
+  padding: 14px;
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--yellow);
+}
+
+mat-stepper {
+  background-color: var(--background);
+}
+/*
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+mat-form-field{
+  margin: 10px 10px 0 10px;
+  width: calc(25% - 20px);
+}
+
+.button-container {
+  margin-top: auto;
+  margin-left: auto;
+}
+
+.next-button{
+  margin-left: 10px;
+}
+*/
+

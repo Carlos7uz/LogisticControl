@@ -1,0 +1,274 @@
+.function-buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.filters {
+  width: 66vw;
+  margin-left: 10px;
+  padding: auto;
+}
+
+.filter-text {
+  color: var(--yellow);
+  font-weight: 400;
+  font-size: 18px;
+  margin: 40px 0 15px 15px;
+}
+
+.date-filtro{
+  font-size: 16px;
+  width: 155.5px;
+  height: auto;
+  margin-right: 2vh;
+}
+
+.restaurant-filtro{
+  font-size: 16px;
+  width: 255.5px;
+  height: auto;
+  margin-right: 2vh;
+}
+
+.clear-button {
+  height: 52px;
+}
+
+.buttons {
+  font-size: 16px;
+  margin: 10px;
+  margin-top: 0;
+  margin-left: 0;
+  padding: 24px;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 50px;
+}
+
+.new-button {
+  margin-left: auto;
+  margin-right: 10px;
+  padding: auto;
+}
+
+.new-delivery {
+  font-size: 14px;
+  margin-top: 8px;
+  padding: 14px;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 34px;
+  width: 9rem;
+}
+
+.snack-bar-inline {
+  position: absolute;
+  top: 122px;
+  left: 49%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.card-snack-bar {
+  position: relative;
+  height: 48px;
+  background-color: var(--yellow);
+  color: var(--black);
+  font-size: 16px;
+  margin: 0 10px;
+  padding: 0 24px 10px;
+}
+
+.content-snack-bar {
+  padding-bottom: 5px;
+}
+
+.icon-snack-bar {
+  margin-right: 1vh;
+  vertical-align: middle;
+  font-size: 20px;
+}
+
+.snack-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--black);
+  animation: fadeOut 4s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+
+.table-container {
+  overflow-x: auto; //tirou deu ruim
+}
+
+table {
+  width: 100%;
+  background-color: var(--background);
+  border-collapse: collapse;
+}
+
+th {
+  color: var(--yellow);
+}
+
+.title-detail {
+  color: var(--yellow);
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 24px;
+}
+
+.detail-header {
+  font-weight: 500;
+}
+
+.detail-table {
+  background-color: var(--hoverBackground);
+}
+
+.expanded-detail-cell {
+  background: linear-gradient(180deg, var(--hoverBackground), var(--background));
+}
+
+.status-completed {
+  background-color: #33633541; /* Verde escuro */
+  border-radius: 5px; /* Bordas arredondadas */
+  padding: 5px 10px;
+  color: rgba(143, 228, 143, 0.822);
+}
+
+.status-planned {
+  background-color: rgba(105, 105, 54, 0.26); /* Amarelo escuro */
+  border-radius: 5px; /* Bordas arredondadas */
+  padding: 5px 10px;
+  color: rgba(240, 240, 133, 0.822);
+}
+
+.status-in-progress {
+  background-color: #344a5aa4; /* Azul escuro */
+  border-radius: 5px; /* Bordas arredondadas */
+  padding: 5px 10px;
+  color: #9fc0d8;
+}
+
+.status-canceled {
+  background-color: #7e48487a; /* Vermelho escuro */
+  border-radius: 5px; /* Bordas arredondadas */
+  padding: 5px 10px;
+  color: rgba(255, 121, 121, 0.842);
+}
+
+.example-element-detail {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.example-element-detail table {
+  width: 100%;
+  border-collapse: collapse; /* Elimina espaços entre bordas */
+}
+
+.example-element-detail th,
+.example-element-detail td {
+  padding: 18px; /* Espaçamento interno */
+  text-align: left; /* Alinhamento à esquerda */
+  background-color: var(--hoverBackground);
+}
+
+.example-element-detail td {
+  border: 1px solid var(--background); /* Borda ao redor do conteúdo */
+  border-radius: 5px; /* Arredondar os cantos da borda */
+  background-color: var(--hoverBackground); /* Fundo branco para o conteúdo de detalhes */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombreamento para profundidade */
+  font-size: 16px;
+}
+
+.data-cell {
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.header-cell {
+  white-space: nowrap;
+}
+
+/* Tamanho do botão */
+.small-button {
+  margin-left: 15px;
+  padding: 1px;  /* Ajuste o padding conforme necessário */
+  font-size: 0.25rem; /* Tamanho da fonte reduzido */
+}
+
+/* Tamanho do ícone */
+.small-icon {
+  font-size: 18px; /* Ajuste o tamanho do ícone conforme necessário */
+}
+
+.custom-paginator{
+  background-color: var(--background);
+}
+
+.empty-table {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  font-weight: 300;
+  font-size: 20px;
+}
+
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.trip-row:not(.example-expanded-row):hover {
+  background: var(--hoverBackground);
+}
+
+tr.trip-row:not(.example-expanded-row):active {
+  background: var(--gray);
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+@keyframes expandAnimation {
+  from {
+    height: 0;
+  }
+  to {
+    height: auto;
+  }
+}
+.example-element-detail {
+  animation: expandAnimation 0.3s ease-in-out;
+}
+
+.trip-row.expanded-row td {
+  background: var(--hoverBackground);
+  border-bottom: 0;
+}
+
+
+
+
+
+

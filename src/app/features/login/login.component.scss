@@ -1,0 +1,172 @@
+.login-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+
+  @media (max-width: 750px) {
+    flex-direction: column;
+  }
+}
+
+.line, .truck-left, .truck-right {
+  @media (max-width: 750px) {
+    display: none;
+  }
+}
+
+.left-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding-bottom: 5vh;
+  padding-right: 5vh;
+
+  @media (max-width: 750px) {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 !important;
+  }
+}
+
+.img-logo {
+  width: 324px;
+  height: auto;
+  filter: invert(1);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--yellow);
+  text-align: center;
+  margin: 0 ;
+  padding-bottom: 2vh;
+}
+
+.truck-left, .truck-right {
+  filter: invert(1);
+  position: relative;
+  margin: 0 auto;
+  width: 50px;
+  height: auto;
+  position: absolute;
+  animation: moveTruck 3s forwards;
+  animation-delay: 2s;
+
+  @media (min-height: 800px) {
+    &.truck-left {
+      top: 29vh;
+      right: 51%;
+      animation-name: moveTruckLeft;
+      transform: rotate(90deg);
+    }
+    &.truck-right {
+      bottom: 30vh;
+      left: 49.5%;
+      animation-name: moveTruckRigth;
+      transform: rotate(-90deg);
+    }
+
+    @keyframes moveTruckLeft {
+      from {
+        top: 29vh; /* posição inicial */
+      }
+      to {
+        top: 65vh; /* posição final */
+      }
+    }
+
+    @keyframes moveTruckRigth {
+      from {
+        bottom: 30vh;
+      }
+      to {
+        bottom: 66vh
+      }
+    }
+  }
+
+  @media (max-height: 799px) {
+    &.truck-left {
+      top: 17vh;
+      right: 51%;
+      animation-name: moveTruckLeft;
+      transform: rotate(90deg);
+    }
+    &.truck-right {
+      bottom: 20vh;
+      left: 50.5%;
+      animation-name: moveTruckRigth;
+      transform: rotate(-90deg);
+    }
+
+    @keyframes moveTruckLeft {
+      from {
+        top: 17vh;
+      }
+      to {
+        top: 72.5vh;
+      }
+    }
+
+    @keyframes moveTruckRigth {
+      from {
+        bottom: 20vh;
+      }
+      to {
+        bottom: 75.5vh;
+      }
+    }
+  }
+}
+
+.line {
+  width: 3px;
+  height: 500px;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 35px, /* Ajuste o espaço entre os pontos */
+    var(--yellow) 1px, /* Início do ponto (fazum efeito fade ndv) */
+    var(--yellow) 80px  /* Fim do ponto (aumenta o tamanho do ponto) */
+  );
+}
+
+.login-form {
+  @media (max-width: 750px) {
+    width: 65%;
+    margin: 20px ;
+  }
+
+  @media (min-width: 750px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 300px;
+    margin-left: 10vh;
+  }
+
+  mat-form-field {
+    width: 100%;
+    font-size: 17px;
+    margin-bottom: 16px;
+  }
+
+  .mat-form-field-flex {
+    height: 36px;
+  }
+
+  .login-button {
+    width: 100%;
+    background-color: var(--yellow) !important;
+    border-radius: 2vh;
+  }
+}

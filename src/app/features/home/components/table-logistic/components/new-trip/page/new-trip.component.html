@@ -1,0 +1,16 @@
+<h1>Registre aqui uma nova viagem</h1>
+
+<mat-stepper #stepper linear  >
+  <mat-step [stepControl]="stepViagem.tripFormGroup" label="Viagem Infos">
+    <app-step-trip #stepViagem></app-step-trip>
+  </mat-step>
+
+  <mat-step [stepControl]="stepVeiculo.vehicleFormGroup" label="Veículo Infos">
+    <app-step-vehicle #stepVeiculo></app-step-vehicle>
+  </mat-step>
+
+  <mat-step [stepControl]="stepMotorista.driverFormGroup" label="Motorista Infos">
+    <app-step-driver #stepMotorista></app-step-driver>
+  </mat-step>
+
+</mat-stepper>

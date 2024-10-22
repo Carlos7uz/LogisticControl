@@ -1,0 +1,36 @@
+<form [formGroup]="tripFormGroup">
+  <div class="form-container">
+    <div class="double-field-container">
+      <mat-form-field class="status" >
+        <mat-label>Status</mat-label>
+        <mat-select  formControlName="status" required>
+          <mat-option value="PLANNED">PLANEJADO</mat-option>
+          <mat-option value="IN_PROGRESS">EM ANDAMENTO</mat-option>
+          <mat-option value="COMPLETED">CONCLUÍDO</mat-option>
+          <mat-option value="CANCELED">CANCELADO</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="rota" >
+        <mat-label>Rota</mat-label>
+        <input matInput placeholder="12/12/2012" formControlName="nameRoute" required>
+      </mat-form-field>
+    </div>
+    <div class="double-field-container">
+      <mat-form-field class="departureDateTime">
+        <mat-label>Data e Hora de Saída</mat-label>
+        <input matInput placeholder="27/10/2024 12:00:00" formControlName="departureDateTime" required>
+      </mat-form-field>
+
+      <mat-form-field class="separationOrders">
+        <mat-label>Ordem de Separação</mat-label>
+        <input matInput placeholder="1" formControlName="separationOrders" required>
+      </mat-form-field>
+    </div>
+
+    <div class="button-container">
+      <button mat-flat-button matStepperPrevious (click)="goBack()">Voltar</button>
+      <button class="next-button" mat-flat-button color="primary" matStepperNext>Próximo</button>
+    </div>
+  </div>
+</form>

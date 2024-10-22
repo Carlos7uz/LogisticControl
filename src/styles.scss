@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use 'assets/theme/theme.scss' as theme;
+@use 'assets/styles/scrollbar.scss' as scrollbar;
+
+
+@include mat.core();
+@include mat.all-component-themes(theme.$custom-theme);
+@include scrollbar.scrollbar;
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+:root{
+  --yellow: #D4C16B;
+  --black: #000000d3;
+  --background: rgb(48, 48, 48);
+  --hoverBackground: rgba(65, 65, 65, 0.925);
+  --white: #ffffffd7;
+  --gray: #464646d5;
+  --green: #7AFF6D;
+  --red: #FF5858;
+}
+
+

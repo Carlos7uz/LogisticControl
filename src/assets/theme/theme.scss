@@ -1,0 +1,65 @@
+@use '@angular/material' as mat;
+
+$custom-primary-palette: (
+  50: #fafafa,
+  100: #fff8da,
+  200: #dfd193,
+  300: #D4C16B,
+  400: #D4C16B,
+  500: #D4C16B,
+  600: #D4C16B,
+  700: #D4C16B,
+  800: #D4C16B,
+  900: #D4C16B,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: rgba(0, 0, 0, 0.87),
+    500: rgba(0, 0, 0, 0.87),
+    600: rgba(0, 0, 0, 0.87),
+    700: rgba(255, 255, 255, 0.87),
+    800: rgba(255, 255, 255, 0.87),
+    900: rgba(255, 255, 255, 0.87),
+  ),
+);
+
+$mdr-primary-palette: (
+  50: #f9f8e9,
+  100: #f0edc8,
+  200: #e6e0a6,
+  300: #ddd588,
+  400: #d8ce76,
+  500: #d3c666,
+  600: #cdb760,
+  700: #c6a358,
+  800: #bd9050,
+  900: #ae7142,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: rgba(0, 0, 0, 0.87),
+    500: rgba(0, 0, 0, 0.87),
+    600: rgba(0, 0, 0, 0.87),
+    700: rgba(255, 255, 255),
+    800: rgba(255, 255, 255),
+    900: rgba(255, 255, 255),
+  ),
+);
+
+$custom-primary: mat.define-palette($custom-primary-palette);
+$custom-accent: mat.define-palette(mat.$green-palette);
+$custom-warn: mat.define-palette(mat.$red-palette);
+
+$custom-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $custom-primary,
+      accent: $custom-accent,
+      warn: $custom-warn,
+    ),
+  )
+);

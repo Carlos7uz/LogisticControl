@@ -1,0 +1,32 @@
+<form [formGroup]="chegadaFormGroup">
+  <ng-template matStepLabel>Chegada info</ng-template>
+
+  <div class="form-container">
+    <mat-form-field>
+      <mat-label>Data Entrega</mat-label>
+      <input matInput formControlName="deliveryDate" placeholder="15/12/2012" required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Data Entrega Logística</mat-label>
+      <input matInput formControlName="logisticsDeliveryDate" placeholder="terça-feira, 13 de dezembro de 2012" required>
+    </mat-form-field>
+
+    <div class="double-field-container">
+      <mat-form-field>
+        <mat-label>Diferença</mat-label>
+        <input matInput formControlName="diff" placeholder="-2" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Período</mat-label>
+        <input matInput formControlName="period" placeholder="Manhã 07H" required>
+      </mat-form-field>
+    </div>
+
+    <div class="button-container">
+      <button mat-flat-button matStepperPrevious>Voltar</button>
+      <button class="next-button" mat-flat-button color="primary" matStepperNext>Próximo</button>
+    </div>
+  </div>
+</form>

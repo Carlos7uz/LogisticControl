@@ -1,0 +1,19 @@
+<form [formGroup]="driverFormGroup">
+  <div class="form-container">
+    <div class="double-field-container">
+      <mat-form-field class="driverName" >
+        <mat-label>Modelo</mat-label>
+        <input matInput placeholder="Tião do Caminhão" formControlName="driverName" required>
+      </mat-form-field>
+
+      <mat-form-field class="contactNumber">
+        <mat-label>Placa</mat-label>
+        <input matInput placeholder="(41) 9 9735-2115" formControlName="contactNumber" required>
+      </mat-form-field>
+    </div>
+    <div class="button-container">
+      <button mat-flat-button matStepperPrevious>Voltar</button>
+      <button class="next-button" mat-flat-button color="primary" matStepperNext>Confirmar</button>
+    </div>
+  </div>
+</form>

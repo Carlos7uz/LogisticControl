@@ -1,0 +1,30 @@
+<form [formGroup]="vehicleFormGroup">
+  <div class="form-container">
+    <div class="double-field-container">
+      <mat-form-field class="model" >
+        <mat-label>Modelo</mat-label>
+        <input matInput placeholder="VOLVO FH 540" formControlName="model" required>
+      </mat-form-field>
+
+      <mat-form-field class="licensePlate">
+        <mat-label>Placa</mat-label>
+        <input matInput placeholder="AYN-2617" formControlName="licensePlate" required>
+      </mat-form-field>
+    </div>
+    <div class="double-field-container">
+      <mat-form-field class="vehicleTypeName" >
+        <mat-label>Tipo Veículo</mat-label>
+        <input matInput placeholder="Cavalo" formControlName="vehicleTypeName" required>
+      </mat-form-field>
+
+      <mat-form-field class="arrangement">
+        <mat-label>Ordem de Separação</mat-label>
+        <input matInput placeholder="92%" formControlName="arrangement" required>
+      </mat-form-field>
+    </div>
+    <div class="button-container">
+      <button mat-flat-button matStepperPrevious>Voltar</button>
+      <button class="next-button" mat-flat-button color="primary" matStepperNext>Próximo</button>
+    </div>
+  </div>
+</form>

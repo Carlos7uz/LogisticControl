@@ -1,0 +1,21 @@
+<form [formGroup]="motoristaFormGroup">
+  <ng-template matStepLabel>Motorista info</ng-template>
+  <div class="form-container">
+    <div class="double-field-container">
+      <mat-form-field>
+        <mat-label>Nome do Motorista</mat-label>
+        <input matInput formControlName="driverName" placeholder="João do Caminhão"
+               required>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Contato do Motorista</mat-label>
+        <input matInput formControlName="driverNumber" placeholder="(41)9 9182-7364"
+               required>
+      </mat-form-field>
+    </div>
+    <div class="button-container">
+      <button mat-flat-button matStepperPrevious>Voltar</button>
+      <button class="next-button" mat-flat-button color="primary" matStepperNext>Confirmar</button>
+    </div>
+  </div>
+</form>

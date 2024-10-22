@@ -1,0 +1,222 @@
+
+<p class="filter-text">Filtros:</p>
+
+<div class="function-buttons">
+  <form [formGroup]="filtersForm">
+    <div class="filters">
+       <!-- Filtro por Restaurante -->
+      <mat-form-field class="restaurant-filtro">
+        <mat-label>Restaurante</mat-label>
+        <input matInput formControlName="restaurantFilter" placeholder="Digite o nome do restaurante" />
+        <mat-icon matSuffix>storefront</mat-icon>
+      </mat-form-field>
+
+      <!-- Filtro por Data de Saída -->
+      <mat-form-field class="date-filtro">
+        <mat-label>Data Saída</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          formControlName="startDate"
+          placeholder="dd/mm/yyyy"
+        >
+        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+
+      <!-- Filtro por Data de Entrega -->
+      <mat-form-field class="date-filtro">
+        <mat-label>Data Entrega</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker2"
+          formControlName="endDate"
+          placeholder="dd/mm/yyyy">
+        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+
+      <button class="clear-button" mat-flat-button color="primary" >Limpar filtros</button>
+    </div>
+  </form>
+
+  <div class="snack-bar-inline" *ngIf="showSnackBar">
+    <mat-card class="card-snack-bar">
+      <mat-card-content class="content-snack-bar">
+        <mat-icon class="icon-snack-bar" [color]="corSnackBar">{{ iconeSnackBar }}</mat-icon>
+        {{ mensagemSnackBar  }}
+      </mat-card-content>
+      <div class="snack-line"></div>
+    </mat-card>
+  </div>
+
+  <div class="new-button">
+    <button class="buttons" mat-flat-button color="primary" [routerLink]="['new-trip']">
+      <mat-icon>add_circle</mat-icon> Nova viagem
+    </button>
+  </div>
+</div>
+
+<div class="container" *ngIf="dataSource.data.length > 0">
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+
+      <!-- Dynamic Column Definitions -->
+      <ng-container *ngFor="let column of columnsToDisplay">
+        <ng-container [matColumnDef]="column">
+          <th mat-header-cell *matHeaderCellDef class="header-cell">
+            {{ columnHeaders[column] || column | titlecase }}
+          </th>
+          <td mat-cell *matCellDef="let element" class="data-cell">
+            <ng-container [ngSwitch]="column">
+              <ng-container *ngSwitchCase="'status'">
+                <span class="number"
+                  [ngClass]="{
+                    'status-completed': element.status === 'COMPLETED',
+                    'status-planned': element.status === 'PLANNED',
+                    'status-in-progress': element.status === 'IN_PROGRESS',
+                    'status-canceled': element.status === 'CANCELED'
+                  }">
+                  {{ formatStatus(element.status) }}
+                </span>
+              </ng-container>
+              <!-- Outros ngSwitchCases... -->
+              <ng-container *ngSwitchDefault>
+                {{ element[column] }} <!-- Isso deve funcionar para propriedades diretas -->
+              </ng-container>
+              <!-- <ng-container *ngSwitchCase="'departureDateTime'">
+                {{ formatDateTime(element.departureDateTime) }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'arrangement'">
+                {{ element.arrangement | number: '1.1-1' }}%
+              </ng-container>
+              <ng-container *ngSwitchCase="'contactNumber'">
+                {{ formatContactNumber(element.contactNumber) }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'route'">
+                {{ element.route.nameRoute }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'horseVehicle'">
+                {{ element.horseVehicle.model }} ({{ element.horseVehicle.licensePlate }})
+              </ng-container>
+              <ng-container *ngSwitchCase="'vehicleType'">
+                {{ element.horseVehicle.vehicleType.vehicleTypeName }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'driver'">
+                {{ element.driver.driverName }}
+              </ng-container> -->
+              <ng-container *ngSwitchCase="'separationOrders'">
+                <span *ngIf="element.separationOrders.length > 0; else noOrders">
+                  {{ element.separationOrders.join(', ') }}
+                </span>
+                <ng-template #noOrders>
+                  Nenhum pedido
+                </ng-template>
+              </ng-container>
+              <ng-container *ngSwitchDefault>
+                {{ element[column] }}
+              </ng-container>
+            </ng-container>
+          </td>
+        </ng-container>
+      </ng-container>
+
+      <!-- Expandable Button Column -->
+      <ng-container matColumnDef="expand">
+        <th mat-header-cell *matHeaderCellDef aria-label="row actions" class="expand-cell">&nbsp;</th>
+        <td mat-cell *matCellDef="let element" class="expand-cell">
+          <button mat-icon-button aria-label="expand row" (click)="toggleExpandedElement(element); $event.stopPropagation()">
+            <mat-icon>
+              {{ expandedElement === element ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+            </mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Expanded Detail Row Content -->
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length + 1" class="expanded-detail-cell">
+          <div class="example-element-detail"  [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+            <ng-container *ngIf="element.deliveries && element.deliveries.length > 0; else noDeliveries">
+              <h3 class="title-detail">Entregas Relacionadas:</h3>
+              <table class="detail-table">
+                <tr>
+                  <th class="detail-header">Order</th>
+                  <th class="detail-header">Status</th>
+                  <th class="detail-header">Data de Entrega</th>
+                  <th class="detail-header">Data Logistica</th>
+                  <th class="detail-header">Hora de Entrega</th>
+                  <th class="detail-header">Filial</th>
+                  <th class="detail-header">Tipo de Descarregamento</th>
+                  <th class="detail-header">Pré-Viagens</th>
+                  <button class="new-delivery" mat-flat-button color="primary" [routerLink] = "['/home/new-delivery', element.uuid]">
+                    <mat-icon>add_circle</mat-icon> Nova entrega
+                  </button>
+                </tr>
+                <tr *ngFor="let delivery of element.deliveries">
+                  <td>{{ delivery.order }}</td>
+                  <td>{{ delivery.status }}</td>
+                  <td>{{ formatDate(delivery.deliveryDate) }}</td>
+                  <td>{{ formatDate(delivery.logisticsDeliveryDate) }}</td>
+                  <td>{{ delivery.deliveryTime }}</td>
+                  <td>{{ delivery.branch.branchName }} ({{ delivery.branch.branchCode }})</td>
+                  <td>{{ delivery.unloadingType.nameUnloadingType }}</td>
+                  <td>{{ delivery.preTrips }}</td>
+                  <button mat-icon-button color="primary" class="small-button" (click)="editDelivery(element.uuid, delivery.uuid)">
+                    <mat-icon class="small-icon">edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" class="small-button" (click)="confirmDelete(delivery.uuid)">
+                    <mat-icon class="small-icon">delete</mat-icon>
+                  </button>
+                </tr>
+              </table>
+            </ng-container>
+            <ng-template #noDeliveries>
+              <p class="no-deliveries">Nenhuma entrega relacionada.</p>
+              <button class="new-delivery" mat-flat-button color="primary" (click)="addNewDelivery(element.uuid)">
+                <mat-icon>add_circle</mat-icon> Nova entrega
+              </button>
+            </ng-template>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Header Row -->
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+
+      <!-- Data Row -->
+      <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+        class="trip-row"
+        [ngClass]="{ 'expanded-row': expandedElement === element }"
+        (click)="toggleExpandedElement(element)">
+      </tr>
+
+      <!-- Expanded Detail Row -->
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"
+      [@detailExpand]="row === expandedElement ? 'expanded' : 'collapsed'"
+      class="example-detail-row"
+      [hidden]="expandedElement !== row">
+    </tr>
+
+    </table>
+  </div>
+
+  <mat-paginator
+    class="custom-paginator"
+    [length]="trips.length"
+    [pageSize]="25"
+    [pageSizeOptions]="[5, 10, 25, 50, 100]"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+
+  <div class="action-buttons">
+    <button mat-stroked-button (click)="openSnackBar('sucesso')">Atualizar com sucesso</button>
+    <button mat-stroked-button (click)="openSnackBar('erro')">Atualizar com erro</button>
+  </div>
+</div>
+
+<div class="empty-table" *ngIf="dataSource.data.length === 0">
+  <h4>Nada aqui :(</h4>
+</div>
+

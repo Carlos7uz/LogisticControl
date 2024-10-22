@@ -1,0 +1,36 @@
+.form-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // 3 colunas
+  gap: 1rem; // Espaçamento entre elementos
+  max-width: 80vw; // Largura máxima do formulário
+  margin: 0 auto; // Centraliza o formulário na tela
+  padding: 20px; // Adiciona um espaço em volta do formulário
+
+}
+
+mat-form-field {
+  margin: 0.5rem 0;
+  background-color: var(--hoverBackground);
+  border-radius: 3%;
+}
+
+.double-field-container {
+  grid-column: span 3; // Faz com que os dois inputs ocupem toda a linha
+  display: flex; // Utiliza flexbox para alinhar os inputs
+  gap: 1rem; // Espaço entre os inputs
+
+  mat-form-field {
+    flex: 1; // Faz com que cada input ocupe espaço igual
+  }
+}
+
+.button-container {
+  grid-column: span 3; // Botões ocupam toda a linha
+  display: flex;
+  justify-content: flex-end; // Alinha os botões à direita
+  margin-top: 1rem; // Espaço acima dos botões
+
+  .next-button {
+    margin-left: 10px; // Espaço entre os botões
+  }
+}

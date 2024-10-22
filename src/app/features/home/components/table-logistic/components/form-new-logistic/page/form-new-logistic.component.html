@@ -1,0 +1,19 @@
+<h1>Registre aqui uma nova entrega</h1>
+
+<mat-stepper #stepper linear  >
+  <mat-step [stepControl]="stepSaida.saidaFormGroup" label="Saída Info">
+    <app-step-saida #stepSaida></app-step-saida>
+  </mat-step>
+
+  <mat-step [stepControl]="stepChegada.chegadaFormGroup" label="Chegada Info">
+    <app-step-chegada #stepChegada></app-step-chegada>
+  </mat-step>
+
+  <mat-step [stepControl]="stepCaminhao.caminhaoFormGroup" label="Caminhão Info">
+    <app-step-caminhao #stepCaminhao></app-step-caminhao>
+  </mat-step>
+
+  <mat-step [stepControl]="stepMotorista.motoristaFormGroup" label="Motorista Info">
+    <app-step-motorista #stepMotorista></app-step-motorista>
+  </mat-step>
+</mat-stepper>

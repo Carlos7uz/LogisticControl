@@ -1,0 +1,34 @@
+<form [formGroup]="caminhaoFormGroup">
+  <ng-template matStepLabel>Caminhão info</ng-template>
+  <div class="form-container">
+    <div class="double-field-container">
+      <mat-form-field>
+        <mat-label>Descarga</mat-label>
+        <input matInput formControlName="unloading" placeholder="SUPPLY"
+               required>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Arranjo</mat-label>
+        <input matInput formControlName="arrangement" placeholder="80,98%"
+               required>
+      </mat-form-field>
+    </div>
+
+    <div class="double-field-container">
+      <mat-form-field>
+        <mat-label>Placa Cavalo</mat-label>
+        <input matInput formControlName="horseSign" placeholder=""
+               required>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Placa Carreta</mat-label>
+        <input matInput formControlName="trailerPlate" placeholder="BCL6914"
+               required>
+      </mat-form-field>
+    </div>
+    <div class="button-container">
+      <button mat-flat-button matStepperPrevious>Voltar</button>
+      <button class="next-button" mat-flat-button color="primary" matStepperNext>Próximo</button>
+    </div>
+  </div>
+</form>

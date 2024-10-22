@@ -1,0 +1,85 @@
+.trip-container {
+  padding: 20px;
+}
+
+.trip-card {
+  background-color: var(--background);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.185);
+  text-align: flex-start;
+}
+
+.trip-welcome {
+  font-size: 1.25em;
+  font-weight: 400;
+  margin: 0;
+  color: #D4C16B;
+  padding-bottom: 24px;
+}
+
+.trip-infos {
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* Centraliza os itens verticalmente */
+  justify-content: center; /* Centraliza os itens horizontalmente */
+  gap: 24px; /* Espaçamento entre os itens */
+}
+
+.trip-infos p {
+  margin: 0;
+}
+
+.trip-infos strong {
+  font-weight: 400;
+  color: #D4C16B;
+}
+
+.form-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // 3 colunas
+  gap: 1.5rem; // Espaçamento entre elementos
+  max-width: 60vw; // Largura máxima do formulário
+  margin: 0 auto; // Centraliza o formulário na tela
+  padding: 20px; // Adiciona um espaço em volta do formulário
+
+}
+
+.container-title{
+  margin-left: 2rem;
+  position:absolute;
+}
+
+.delivery-title{
+  font-size: 1.25em;
+  font-weight: 400;
+  color: #D4C16B;
+  padding-bottom: 24px;
+}
+
+mat-form-field {
+  margin: 0.5rem 0;
+  background-color: var(--hoverBackground);
+  border-radius: 3%;
+}
+
+.double-field-container {
+  grid-column: span 3; // Faz com que os dois inputs ocupem toda a linha
+  display: flex; // Utiliza flexbox para alinhar os inputs
+  gap: 3rem; // Espaço entre os inputs
+
+  mat-form-field {
+    flex: 1; // Faz com que cada input ocupe espaço igual
+  }
+}
+
+.button-container {
+  grid-column: span 3; // Botões ocupam toda a linha
+  display: flex;
+  justify-content: flex-end; // Alinha os botões à direita
+  margin-top: 1rem; // Espaço acima dos botões
+
+  .next-button {
+    margin-left: 10px; // Espaço entre os botões
+  }
+}

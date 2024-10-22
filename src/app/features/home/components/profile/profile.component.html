@@ -1,0 +1,18 @@
+<div class="profile" *ngIf="user">
+  <h2>Perfil de {{ user.userName }}</h2>
+  <p><strong>Email:</strong> {{ user.email }}</p>
+  <p><strong>Status:</strong> {{ user.isActive ? 'Ativo' : 'Inativo' }}</p>
+  <div *ngIf="user.role.length > 0">
+    <h3>Funções:</h3>
+    <ul>
+      <li *ngFor="let role of user.role">
+        <strong>{{ role.name }}:</strong> {{ role.description }}
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Caso o usuário não seja encontrado -->
+<div class="profile" *ngIf="!user">
+  <p>Usuário não encontrado.</p>
+</div>

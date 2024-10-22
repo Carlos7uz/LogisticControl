@@ -1,0 +1,44 @@
+<form [formGroup]="saidaFormGroup" class="form-container">
+  <mat-form-field class="rota" >
+    <mat-label>Rota</mat-label>
+    <input matInput placeholder="OESTE SP" formControlName="route" required>
+  </mat-form-field>
+
+  <mat-form-field class="datasaida" >
+    <mat-label>Data Saída</mat-label>
+    <input matInput placeholder="12/12/2012" formControlName="departureDate" required>
+  </mat-form-field>
+
+  <mat-form-field class="horasaida">
+    <mat-label>Hora Saída</mat-label>
+    <input matInput placeholder="12:00" formControlName="departureTime" required>
+  </mat-form-field>
+
+  <mat-form-field class="seq">
+    <mat-label>SEQ</mat-label>
+    <input matInput placeholder="1" formControlName="seq" required>
+  </mat-form-field>
+
+  <mat-form-field class="restaurante">
+    <mat-label>Restaurante</mat-label>
+    <input matInput placeholder="JE-P-TRK-RU-ALECRINS" formControlName="restaurant" required>
+  </mat-form-field>
+
+  <div class="double-field-container">
+    <mat-form-field class="previagens">
+      <mat-label>Pré Viagens</mat-label>
+      <input matInput placeholder="12345" formControlName="preTrips" required>
+    </mat-form-field>
+
+    <mat-form-field class="ordens">
+      <mat-label>Ordens de Separação</mat-label>
+      <input matInput placeholder="123456-123456" formControlName="separationOrders" required>
+    </mat-form-field>
+  </div>
+
+</form>
+
+<div class="button-container">
+  <button mat-flat-button matStepperPrevious (click)="goBack()">Voltar</button>
+  <button class="next-button" mat-flat-button color="primary" matStepperNext>Próximo</button>
+</div>
