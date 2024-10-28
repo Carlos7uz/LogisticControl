@@ -12,6 +12,8 @@
   </div>
 </div>
 
+<button matButton (click)="disconnectUser()">Desconectar</button>
+
 <!-- Caso o usuário não seja encontrado -->
 <div class="profile" *ngIf="!user">
   <p>Usuário não encontrado.</p>

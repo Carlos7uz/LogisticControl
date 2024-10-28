@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Router, RouterModule } from '@angular/router';
@@ -24,6 +24,7 @@ import { TripService } from '../../../../../core/services/trip.service';
 import { DeliveryService } from '../../../../../core/services/delivery.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Delivery } from '../../../../../core/interfaces/delivery.interface';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-table-logistic',
@@ -52,6 +53,7 @@ import { Delivery } from '../../../../../core/interfaces/delivery.interface';
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
+    NgxSpinnerModule
   ],
   templateUrl: './table-logistic.component.html',
   styleUrl: './table-logistic.component.scss',
@@ -63,10 +65,13 @@ import { Delivery } from '../../../../../core/interfaces/delivery.interface';
     ]),
   ]
 })
-export class TableLogisticComponent implements OnInit {
+export class TableLogisticComponent implements OnInit, AfterViewInit {
   //real
   trips: Trip[] = [];
+  deliveries: Delivery[] = [];
+  tripUuid!: string;
   expandedElement: Trip | null = null;
+  loadingDeliveries: boolean = false; // Novo estado para carregamento
   columnsToDisplay = [
     'route',
     'departureDateTime',
@@ -113,7 +118,8 @@ export class TableLogisticComponent implements OnInit {
     private tripService: TripService,
     private deliveryService: DeliveryService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService,
   ){}
 
   ngOnInit(): void {
@@ -137,6 +143,24 @@ export class TableLogisticComponent implements OnInit {
     });
   }
 
+  editTrip(trip: Trip) {
+    this.router.navigate(['/home/edit-trip', trip.uuid]); // Exemplo de navegação para página de edição
+  }
+
+  deleteTrip(trip: Trip) {
+    if (confirm(`Tem certeza que deseja deletar a viagem: ${trip.route?.nameRoute}?`)) {
+      this.tripService.deleteTrip(trip.uuid).subscribe(() => {
+        console.log('Trip deletada com sucesso');
+        // Atualize a tabela após a deleção
+        this.trips = this.trips.filter(t => t.uuid !== trip.uuid);
+        this.dataSource.data = this.trips;
+        this.snackBar.open('Viagem deletada com sucesso!', 'Fechar', { duration: 3000 });
+      }, error => {
+        console.error('Erro ao deletar a trip:', error);
+        this.snackBar.open('Erro ao deletar a viagem. Tente novamente.', 'Fechar', { duration: 3000 });
+      });
+    }
+  }
   toggleExpandedElement(element: Trip): void {
     if (this.expandedElement === element) {
       this.expandedElement = null; // Fecha se já estiver expandido
@@ -147,11 +171,16 @@ export class TableLogisticComponent implements OnInit {
   }
 
   loadDeliveries(tripUuid: string): void {
-    this.tripService.getDeliveriesByTrip(tripUuid).subscribe(deliveries => {
+    this.loadingDeliveries = true; // Inicia o carregamento
+    this.deliveryService.getDeliveriesByTrip(tripUuid).subscribe(deliveries => {
       const trip = this.trips.find(t => t.uuid === tripUuid);
       if (trip) {
         trip.deliveries = deliveries; // Adiciona as entregas à viagem
       }
+      this.loadingDeliveries = false; // Termina o carregamento
+    }, error => {
+      console.error('Error loading deliveries:', error);
+      this.loadingDeliveries = false; // Termina o carregamento mesmo em caso de erro
     });
   }
 
@@ -198,37 +227,6 @@ export class TableLogisticComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  // private setupFilters(): void {
-  //   this.filtersForm.valueChanges.pipe(debounceTime(500)).subscribe(() => this.applyFilters());
-  // }
-
-  // applyFilters(): void {
-  //   const { restaurantFilter, startDate, endDate } = this.filtersForm.value;
-
-  //   this.dataSource.data = this.allData.filter(item => {
-  //       const matchesRestaurant = restaurantFilter
-  //           ? item.restaurante.toLowerCase().includes(restaurantFilter.trim().toLowerCase())
-  //           : true;
-
-  //       const itemDataSaida = this.convertToDate(item.dataSaida);
-  //       const itemDataEntrega = this.convertToDate(item.dataEntrega);
-
-  //       const matchesStartDate = startDate
-  //           ? itemDataSaida && itemDataSaida.toDateString() === new Date(startDate).toDateString()
-  //           : true;
-
-  //       const matchesEndDate = endDate
-  //           ? itemDataEntrega && itemDataEntrega.toDateString() === new Date(endDate).toDateString()
-  //           : true;
-
-  //       return matchesRestaurant && matchesStartDate && matchesEndDate;
-  //   });
-  // }
-
-  // clearFilters(): void {
-  //   this.filtersForm.reset();
-  //   this.applyFilters();
-  // }
 
   openSnackBar(tipo: string): void {
     this.mensagemSnackBar = tipo === 'sucesso' ? 'Atualizado com sucesso' : 'Falha ao atualizar';
@@ -252,11 +250,13 @@ export class TableLogisticComponent implements OnInit {
 
   formatDateTime(dateTime: string): string {
     const date = new Date(dateTime);
-    return date.toLocaleString('pt-BR').replace(',', '');
-  }
+    const formattedDate = date.toLocaleDateString('pt-BR');
+    const formattedTime = date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    return `${formattedDate} ${formattedTime}`;
+}
 
   formatDate(dateTime: string): string {
-    const date = new Date(dateTime);
+    const date = new Date(dateTime + 'T00:00:00');
     return date.toLocaleDateString('pt-BR');
   }
 

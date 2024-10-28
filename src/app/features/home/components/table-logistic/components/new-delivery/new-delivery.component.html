@@ -25,19 +25,19 @@
         </mat-form-field>
 
         <mat-form-field class="input">
-          <mat-label>Data de Entrega</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="deliveryDate">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <mat-label>Data Logística de Entrega</mat-label>
+          <input matInput [matDatepicker]="logisticsPicker" formControlName="logisticsDeliveryDate">
+          <mat-datepicker-toggle matSuffix [for]="logisticsPicker"></mat-datepicker-toggle>
+          <mat-datepicker #logisticsPicker></mat-datepicker>
         </mat-form-field>
       </div>
 
       <div class="double-field-container">
         <mat-form-field class="input">
-          <mat-label>Data Logística de Entrega</mat-label>
-          <input matInput [matDatepicker]="logisticsPicker" formControlName="logisticsDeliveryDate">
-          <mat-datepicker-toggle matSuffix [for]="logisticsPicker"></mat-datepicker-toggle>
-          <mat-datepicker #logisticsPicker></mat-datepicker>
+          <mat-label>Data de Entrega</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="deliveryDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field class="input">
@@ -46,7 +46,7 @@
         </mat-form-field>
       </div>
 
-      <div class="double-field-container">
+      <div class="full">
         <mat-form-field class="input">
           <mat-label>Filial</mat-label>
           <input
@@ -54,14 +54,18 @@
             [formControl]="branchControl"
             [matAutocomplete]="auto"
             placeholder="Digite para filtrar..."
+
           >
           <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let branch of filteredBranches$ | async" [value]="branch.uuid">
+            <mat-option *ngFor="let branch of filteredBranches$ | async"
+                        (click)="selectBranch(branch)" [value]="branch.branchName"> <!-- Use o nome da filial aqui -->
               {{ branch.branchName }} ({{ branch.branchCode }})
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+      </div>
 
+      <div class="double-field-container">
         <mat-form-field class="input">
           <mat-label>Tipo de Descarga</mat-label>
           <mat-select formControlName="unloadingTypeUuid">
@@ -70,76 +74,23 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+
+        <mat-form-field class="status">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status" required>
+            <mat-option value="PENDING">PENDENTE</mat-option>
+            <mat-option value="COMPLETED">CONCLUÍDO</mat-option>
+          </mat-select>
+        </mat-form-field>
+
       </div>
       <div class="button-container">
-        <button mat-flat-button matStepperPrevious>Voltar</button>
-        <button class="next-button" mat-flat-button color="primary" matStepperNext>Salvar entrega</button>
+        <button mat-flat-button (click)="voltar()">Voltar</button>
+        <button class="next-button" mat-flat-button color="primary" (click)="onSubmit()" [disabled]="!deliveryForm.valid">
+          Salvar entrega
+        </button>
       </div>
 
     </div>
   </form>
-
-
-  <!-- <div class="form-container">
-    <div class="form-card">
-      <div class="tile-form">
-      <h3 class="trip-welcome">Registre aqui um novo delivery</h3>
-      </div>
-
-      <div class="form-content">
-        <form [formGroup]="deliveryForm" >
-          <mat-form-field class="input">
-            <mat-label>Ordem</mat-label>
-            <input matInput formControlName="order" type="number">
-          </mat-form-field>
-
-          <mat-form-field class="input">
-            <mat-label>Data de Entrega</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="deliveryDate">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field class="input">
-            <mat-label>Data Logística de Entrega</mat-label>
-            <input matInput [matDatepicker]="logisticsPicker" formControlName="logisticsDeliveryDate">
-            <mat-datepicker-toggle matSuffix [for]="logisticsPicker"></mat-datepicker-toggle>
-            <mat-datepicker #logisticsPicker></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field class="input">
-            <mat-label>Hora de Entrega</mat-label>
-            <input matInput formControlName="deliveryTime" type="time">
-          </mat-form-field>
-
-          <mat-form-field class="input">
-            <mat-label>Filial</mat-label>
-            <input
-              matInput
-              [formControl]="branchControl"
-              [matAutocomplete]="auto"
-              placeholder="Digite para filtrar..."
-            >
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let branch of filteredBranches$ | async" [value]="branch.uuid">
-                {{ branch.branchName }} ({{ branch.branchCode }})
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-
-          <mat-form-field class="input">
-            <mat-label>Tipo de Descarga</mat-label>
-            <mat-select formControlName="unloadingTypeUuid">
-              <mat-option *ngFor="let unloadingType of (unloadingTypes$ | async)" [value]="unloadingType.uuid">
-                {{ unloadingType.nameUnloadingType }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-        </form>
-      </div>
-      <button mat-raised-button type="submit">Salvar Entrega</button>
-    </div>
-  </div> -->
-
 </div>

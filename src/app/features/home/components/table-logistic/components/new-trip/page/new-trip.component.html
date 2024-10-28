@@ -1,16 +1,98 @@
-<h1>Registre aqui uma nova viagem</h1>
+<form [formGroup]="tripFormGroup">
+  <!-- Campo de Rota -->
+  <mat-form-field class="input">
+    <mat-label>Rota</mat-label>
+    <input
+      matInput
+      [formControl]="routeControl"
+      [matAutocomplete]="routeAuto"
+      placeholder="Digite para filtrar..."
+    >
+    <mat-autocomplete #routeAuto="matAutocomplete">
+      <mat-option *ngFor="let route of filteredRoutes$ | async" (click)="selectRoute(route)" [value]="route.nameRoute">
+        {{ route.nameRoute }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
 
-<mat-stepper #stepper linear  >
-  <mat-step [stepControl]="stepViagem.tripFormGroup" label="Viagem Infos">
-    <app-step-trip #stepViagem></app-step-trip>
-  </mat-step>
+  <!-- Campo de Data e Hora de Partida -->
+  <mat-form-field class="input">
+    <mat-label>Data e Hora de Partida</mat-label>
+    <input matInput [formControlName]="'departureDateTime'" type="text" placeholder="00/00/0000 00:00" mask="00/00/0000 00:00">
+  </mat-form-field>
 
-  <mat-step [stepControl]="stepVeiculo.vehicleFormGroup" label="Veículo Infos">
-    <app-step-vehicle #stepVeiculo></app-step-vehicle>
-  </mat-step>
+  <!-- <mat-form-field class="date-filtro">
+    <mat-label>Data Entrega</mat-label>
+    <input
+      matInput
+      [matDatepicker]="picker2"
+      formControlName="endDate"
+      placeholder="dd/mm/yyyy">
+    <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+  </mat-form-field> -->
 
-  <mat-step [stepControl]="stepMotorista.driverFormGroup" label="Motorista Infos">
-    <app-step-driver #stepMotorista></app-step-driver>
-  </mat-step>
 
-</mat-stepper>
+  <!-- Campo de Veículo -->
+  <mat-form-field class="input">
+    <mat-label>Veículo</mat-label>
+    <input
+      matInput
+      [formControl]="vehicleControl"
+      [matAutocomplete]="vehicleAuto"
+      placeholder="Digite para filtrar..."
+    >
+    <mat-autocomplete #vehicleAuto="matAutocomplete">
+      <mat-option *ngFor="let vehicle of filteredVehicles$ | async" (click)="selectVehicle(vehicle)" [value]="vehicle.licensePlate">
+        {{ vehicle.model }}({{ vehicle.licensePlate }})
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <!-- Campo de Motorista -->
+  <mat-form-field class="input">
+    <mat-label>Motorista</mat-label>
+    <input
+      matInput
+      [formControl]="driverControl"
+      [matAutocomplete]="driverAuto"
+      placeholder="Digite para filtrar..."
+    >
+    <mat-autocomplete #driverAuto="matAutocomplete">
+      <mat-option *ngFor="let driver of filteredDrivers$ | async" (click)="selectDriver(driver)" [value]="driver.driverName">
+        {{ driver.driverName }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <!-- Campo de Arranjo -->
+  <mat-form-field class="input">
+    <mat-label>Arranjo</mat-label>
+    <input matInput type="number" formControlName="arrangement">
+  </mat-form-field>
+
+  <!-- Campo de Número de Contato -->
+  <mat-form-field class="input">
+    <mat-label>Número de Contato</mat-label>
+    <input
+      matInput
+      type="tel"
+      formControlName="contactNumber"
+      mask="(00) 00000-0000"
+      [dropSpecialCharacters]="true"
+    />
+  </mat-form-field>
+
+  <mat-form-field class="status">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status" required>
+      <mat-option value="PLANNED">PLANEJADO</mat-option>
+      <mat-option value="IN_PROGRESS">EM ANDAMENTO</mat-option>
+      <mat-option value="COMPLETED">CONCLUÍDO</mat-option>
+      <mat-option value="CANCELED">CANCELADO</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Salvar</button>
+</form>

@@ -8,6 +8,9 @@ import { Router, RouterModule } from '@angular/router';
 import { LoginService } from '../../core/services/login.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../core/services/auth.service';
+import { catchError, finalize, of, tap, throwError } from 'rxjs';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +22,7 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     MatIconModule,
     MatButtonModule,
+    MatSnackBarModule,
     MatInputModule,
     MatProgressSpinnerModule,
     NgxSpinnerModule
@@ -28,11 +32,18 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent {
   isLoading = false;
+  passwordVisible: boolean = false;
+
+  showSnackBar = false;
+  mensagemSnackBar: string = '';
+  iconeSnackBar: string = 'error';
+  corSnackBar: string = 'error';
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private loginService: LoginService,
+    private authService: AuthService,
     private spinner: NgxSpinnerService,
   ){}
 
@@ -44,37 +55,55 @@ export class LoginComponent {
   login(): void {
     if (this.loginFormGroup.valid) {
       const { email, password } = this.loginFormGroup.value;
-      this.isLoading = true;
 
+      this.isLoading = true;
       this.spinner.show();
 
-      if (email && password) { // Verifica se não é null ou undefined
-        this.loginService.login(email, password).subscribe(
-          response => {
-            console.log(response)
-            if(response && response.accessToken){
-              localStorage.setItem('authToken', response.accessToken);
-              this.spinner.hide(); // Esconde o spinner
-              this.isLoading = false; // Desativa o spinner
-              this.router.navigate(['/home']);
+      if(email && password){
+        this.loginService.login(email, password).pipe(
+          tap(response => {
+            if (response && response.accessToken) {
+              this.spinner.hide();
+              this.isLoading = false;
+              this.authService.setToken(response.accessToken); // Salva o token
+              this.router.navigate(['/home']); // Navega para o home
             } else {
-              console.error('Login falhou: token não recebido');
-              this.isLoading = false; // Desativa o spinner
-            this.spinner.hide(); // Esconde o spinner
+              this.spinner.hide();
+              this.isLoading = false;
+              this.showSnackBarMessage('Credenciais inválidas', 'error', 'error');
             }
-          },
-          error => {
-            console.error('Erro ao fazer login', error);
-            this.spinner.hide(); // Esconde o spinner
-            this.isLoading = false; // Desativa o spinner
-          }
-        );
+          }),
+          catchError(error => {
+            this.showSnackBarMessage('Não foi possível realizar o login', 'error', 'error');
+            //return of(null)
+            return throwError(() => error);
+          }),
+          finalize(() => {
+            this.isLoading = false;
+            this.spinner.hide();
+          })
+        ).subscribe();
       } else {
-        console.error('Email ou senha não podem ser vazios');
-        this.spinner.hide(); // Esconde o spinner
-        this.isLoading = false; // Desativa o spinner
-        // Aqui você pode mostrar uma mensagem de erro ao usuário
+        this.showSnackBarMessage('Email e senha são obrigatórios', 'error', 'error');
       }
+    } else {
+      this.showSnackBarMessage('Formulário inválido', 'error', 'error');
     }
+  }
+
+  showSnackBarMessage(message: string, icon: string, color: string): void {
+    this.mensagemSnackBar = message;
+    this.iconeSnackBar = icon;
+    this.corSnackBar = color;
+    this.showSnackBar = true;
+
+    // Opcional: esconder o snack bar após alguns segundos
+    setTimeout(() => {
+      this.showSnackBar = false;
+    }, 3000); // 3000 ms = 3 segundos
+  }
+
+  passwordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
   }
 }

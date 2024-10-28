@@ -139,6 +139,12 @@ th {
   background-color: var(--hoverBackground);
 }
 
+.expand-cell{
+  display: flex;
+  flex-direction: row;
+  height: auto;
+}
+
 .expanded-detail-cell {
   background: linear-gradient(180deg, var(--hoverBackground), var(--background));
 }

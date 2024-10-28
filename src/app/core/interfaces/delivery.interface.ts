@@ -8,7 +8,7 @@ export interface Delivery {
   tripUuid: string;
   branch: Branch;
   unloadingType: UnloadingType;
-  preTrips: number[];
+  preTrips?: number[];
 
 }
 export interface Branch {

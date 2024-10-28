@@ -25,18 +25,25 @@
 
       <mat-form-field class="input-login">
         <mat-label>Senha</mat-label>
-        <input class="input-form" matInput type="password" formControlName="password" required>
+        <input class="input-form" matInput [type]="passwordVisible ? 'text' : 'password'" formControlName="password" required>
+        <mat-icon matSuffix (click)="passwordVisibility()" style="cursor: pointer;">
+          {{ passwordVisible ? 'visibility_off' : 'visibility' }}
+        </mat-icon>
         <mat-error *ngIf="loginFormGroup.get('password')?.invalid && (loginFormGroup.get('password')?.touched || loginFormGroup.get('password')?.dirty)">
           A senha é obrigatória.
         </mat-error>
       </mat-form-field>
 
       <button mat-raised-button class="login-button" (click)="login()">Login</button>
+
+      <!-- SnackBar Message -->
+      <div *ngIf="showSnackBar" class="snack-bar" [ngClass]="corSnackBar">
+        <mat-icon>{{ iconeSnackBar }}</mat-icon>
+        <span>{{ mensagemSnackBar }}</span>
+      </div>
     </form>
   </div>
 </div>
-
-<!-- <mat-spinner *ngIf="isLoading"></mat-spinner> -->
 
 <ngx-spinner
   *ngIf="isLoading"

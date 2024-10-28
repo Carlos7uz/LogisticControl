@@ -1,5 +1,6 @@
 
 import { Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -9,6 +10,7 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('./features/home/page/home.component').then(c => c.HomeComponent),
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
@@ -16,6 +18,10 @@ export const routes: Routes = [
       },
       {
         path: 'new-trip',
+        loadComponent: () => import('./features/home/components/table-logistic/components/new-trip/page/new-trip.component').then(c => c.NewTripComponent)
+      },
+      {
+        path: 'edit-trip/:tripUuid',
         loadComponent: () => import('./features/home/components/table-logistic/components/new-trip/page/new-trip.component').then(c => c.NewTripComponent)
       },
       {

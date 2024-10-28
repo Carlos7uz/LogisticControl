@@ -46,21 +46,32 @@
 }
 
 .container-title{
-  margin-left: 2rem;
-  position:absolute;
+  margin-left: 2vh;
+
 }
 
 .delivery-title{
   font-size: 1.25em;
   font-weight: 400;
   color: #D4C16B;
-  padding-bottom: 24px;
+  margin-left: 2vh;
+
 }
 
 mat-form-field {
   margin: 0.5rem 0;
   background-color: var(--hoverBackground);
   border-radius: 3%;
+}
+
+.full{
+  grid-column: span 3; // Faz com que os dois inputs ocupem toda a linha
+  display: flex; // Utiliza flexbox para alinhar os inputs
+  gap: 3rem; // Espaço entre os inputs
+
+  mat-form-field {
+    flex: 1; // Faz com que cada input ocupe espaço igual
+  }
 }
 
 .double-field-container {

@@ -10,18 +10,13 @@ import { BRANCH_MOCK } from '../../shared/mocks/branch.mock';
 export class BranchService {
   private readonly tripsUrl = 'https://api.example.com/trips'; // Ajuste a URL
   private readonly deliveriesUrl = 'https://api.example.com/deliveries'; // Ajuste a URL
-  private readonly branchesUrl = 'https://api.example.com/Branch'; // Ajuste a URL
-  private useMockData = true; // Flag para alternar entre dados mockados e API real
+  private useMockData = false; // Flag para alternar entre dados mockados e API real
+  private readonly branchesUrl = 'https://api-dev-logisticcontrol.azurewebsites.net/api/Branch'; // Ajuste a URL
 
   constructor(private http: HttpClient) { }
 
   getAllBranches(): Observable<Branch[]> {
-    if(this.useMockData) {
-      return of(BRANCH_MOCK.branches); // Retorna o mock
-    } else {
-      return this.http.get<Branch[]>(this.branchesUrl); // Chamada ao backend
-    }
+    return this.http.get<Branch[]>(this.branchesUrl); // Chamada ao backend
   }
-
 
 }

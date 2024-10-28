@@ -11,11 +11,23 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field class="rota" >
+      <mat-form-field class="rota">
         <mat-label>Rota</mat-label>
-        <input matInput placeholder="12/12/2012" formControlName="nameRoute" required>
+        <input
+          matInput
+          [formControl]="routeControl"
+          [matAutocomplete]="auto"
+          placeholder="Digite para filtrar..."
+          (blur)="onRouteBlur()"
+        />
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let route of filteredRoutes$ | async" [value]="route.nameRoute">
+            {{ route.nameRoute }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
     </div>
+
     <div class="double-field-container">
       <mat-form-field class="departureDateTime">
         <mat-label>Data e Hora de Saída</mat-label>

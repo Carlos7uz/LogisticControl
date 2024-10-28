@@ -139,6 +139,8 @@
 }
 
 .login-form {
+  position: relative; // Continua a ter contexto de posicionamento
+
   @media (max-width: 750px) {
     width: 65%;
     margin: 20px ;
@@ -168,5 +170,32 @@
     width: 100%;
     background-color: var(--yellow) !important;
     border-radius: 2vh;
+    color:var(--black);
   }
 }
+
+.snack-bar {
+  position: absolute; // Mantém o SnackBar absoluto
+  width: 90%; // Largura do SnackBar
+  top: 100%; // Posiciona acima do botão de login
+  left: 50%; // Centraliza horizontalmente
+  transform: translateX(-50%); // Ajusta para que o SnackBar fique centralizado
+  display: flex;
+  justify-content: center; // Centraliza o conteúdo horizontalmente
+  align-items: center; // Alinha verticalmente
+  padding: 16px;
+  border-radius: 2vh;
+  margin: 10px 0; // Espaçamento entre o SnackBar e o botão
+  color: var(--black);
+  z-index: 1000; // Certifique-se de que ele fique acima de outros elementos
+  background-color: var(--red); // Cor de fundo padrão
+}
+
+.snack-bar[ngClass="accent"] {
+  background-color: #4caf50; // Cor de sucesso
+}
+
+.snack-bar[ngClass="warn"] {
+  background-color: #f44336; // Cor de erro
+}
+
